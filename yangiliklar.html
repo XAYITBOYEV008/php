@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .login-container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 400px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .login-header h2 {
+            color: #333;
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .login-header p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e1e1e1;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-group input::placeholder {
+            color: #aaa;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 40px;
+            background: none;
+            border: none;
+            color: #666;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .remember-forgot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            font-size: 14px;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #555;
+        }
+
+        .remember-me input {
+            width: 16px;
+            height: 16px;
+        }
+
+        .forgot-password {
+            color: #667eea;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .forgot-password:hover {
+            color: #764ba2;
+            text-decoration: underline;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .login-btn:active {
+            transform: translateY(0);
+        }
+
+        .signup-link {
+            text-align: center;
+            margin-top: 25px;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .signup-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .signup-link a:hover {
+            color: #764ba2;
+            text-decoration: underline;
+        }
+
+        .error-message {
+            background: #ffebee;
+            color: #c62828;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #c62828;
+            font-size: 14px;
+        }
+
+        .success-message {
+            background: #e8f5e8;
+            color: #2e7d32;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #2e7d32;
+            font-size: 14px;
+        }
+
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 30px 20px;
+            }
+            
+            .remember-forgot {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <h2>Xush kelibsiz</h2>
+            <p>Hisobingizga kiring</p>
+        </div>
+
+        <?php
+        // PHP kodini bu yerga yozamiz
+        session_start();
+        
+        // Xatolik va muvaffaqiyat xabarlari
+        $error = '';
+        $success = '';
+        
+        // Form yuborilganda
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $username = trim($_POST['username']);
+            $password = trim($_POST['password']);
+            $remember = isset($_POST['remember']) ? true : false;
+            
+            // Validatsiya
+            if (empty($username) || empty($password)) {
+                $error = "Iltimos, barcha maydonlarni to'ldiring!";
+            } else {
+                // Bu yerda haqiqiy autentifikatsiya qilishingiz kerak
+                // Misol uchun:
+                $valid_username = "admin";
+                $valid_password = "12345";
+                
+                if ($username === $valid_username && $password === $valid_password) {
+                    $_SESSION['user'] = $username;
+                    
+                    if ($remember) {
+                        setcookie('user', $username, time() + (86400 * 30), "/"); // 30 kun
+                    }
+                    
+                    $success = "Muvaffaqiyatli kirdingiz!";
+                    // Bosh sahifaga yo'naltirish
+                    header("Refresh: 2; url=dashboard.php");
+                } else {
+                    $error = "Noto'g'ri foydalanuvchi nomi yoki parol!";
+                }
+            }
+        }
+        
+        // Xabarlarni ko'rsatish
+        if (!empty($error)) {
+            echo '<div class="error-message">' . $error . '</div>';
+        }
+        if (!empty($success)) {
+            echo '<div class="success-message">' . $success . '</div>';
+        }
+        ?>
+
+        <form method="POST" action="">
+            <div class="form-group">
+                <label for="username">Foydalanuvchi nomi</label>
+                <input type="text" id="username" name="username" 
+                       placeholder="Foydalanuvchi nomingizni kiriting" 
+                       value="<?php echo isset($_POST['username']) ? htmlspecialchars($_POST['username']) : ''; ?>"
+                       required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Parol</label>
+                <input type="password" id="password" name="password" 
+                       placeholder="Parolingizni kiriting" required>
+                <button type="button" class="password-toggle" onclick="togglePassword()">Ko'rsatish</button>
+            </div>
+
+            <div class="remember-forgot">
+                <label class="remember-me">
+                    <input type="checkbox" name="remember" 
+                           <?php echo (isset($_POST['remember']) ? 'checked' : ''); ?>>
+                    Eslab qolish
+                </label>
+                <a href="forgot_password.php" class="forgot-password">Parolni unutdingizmi?</a>
+            </div>
+
+            <button type="submit" class="login-btn">Kirish</button>
+        </form>
+
+        <div class="signup-link">
+            Hisobingiz yo'qmi? <a href="register.php">Ro'yxatdan o'ting</a>
+        </div>
+    </div>
+
+    <script>
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const toggleButton = document.querySelector('.password-toggle');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleButton.textContent = 'Yashirish';
+            } else {
+                passwordInput.type = 'password';
+                toggleButton.textContent = 'Ko\'rsatish';
+            }
+        }
+
+        // Form avto validatsiya
+        document.querySelector('form').addEventListener('submit', function(e) {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            if (username.trim() === '' || password.trim() === '') {
+                e.preventDefault();
+                alert('Iltimos, barcha maydonlarni to\'ldiring!');
+            }
+        });
+    </script>
+</body>
+</html>

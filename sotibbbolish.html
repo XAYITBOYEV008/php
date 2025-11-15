@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sotib Olish - Bizning Sayt</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <h2>Bizning Sayt</h2>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Bosh Sahifa</a></li>
+                <li><a href="yangliiklar.html">Yangiliklar</a></li>
+                <li><a href="premiumolish.html">Premium</a></li>
+                <li><a href="sotibbolish.php" class="active">Sotib Olish</a></li>
+                <li><a href="kontakt.html">Kontakt</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="container">
+        <div class="form-container">
+            <h1 style="text-align: center; margin-bottom: 2rem;">Buyurtma Berish</h1>
+            
+            <?php
+            // PHP kodini qo'shamiz
+            $plan = isset($_GET['plan']) ? $_GET['plan'] : 'basic';
+            $plan_names = [
+                'basic' => 'Boshlang\'ich Paket - $9.99',
+                'pro' => 'Professional Paket - $19.99', 
+                'business' => 'Biznes Paket - $49.99'
+            ];
+            
+            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                $name = htmlspecialchars($_POST['name']);
+                $email = htmlspecialchars($_POST['email']);
+                $phone = htmlspecialchars($_POST['phone']);
+                $selected_plan = htmlspecialchars($_POST['plan']);
+                
+                echo '<div style="background: #d4edda; color: #155724; padding: 15px; border-radius: 5px; margin-bottom: 20px;">
+                    <h3>✅ Buyurtmangiz qabul qilindi!</h3>
+                    <p><strong>Ism:</strong> '.$name.'</p>
+                    <p><strong>Email:</strong> '.$email.'</p>
+                    <p><strong>Telefon:</strong> '.$phone.'</p>
+                    <p><strong>Tanlangan paket:</strong> '.$plan_names[$selected_plan].'</p>
+                    <p>Tez orada siz bilan bog\'lanamiz!</p>
+                </div>';
+            }
+            ?>
+            
+            <form method="POST" action="">
+                <div class="form-group">
+                    <label for="plan">Tanlangan Paket</label>
+                    <select id="plan" name="plan" required>
+                        <option value="basic" <?php echo $plan == 'basic' ? 'selected' : ''; ?>>Boshlang'ich - $9.99/oy</option>
+                        <option value="pro" <?php echo $plan == 'pro' ? 'selected' : ''; ?>>Professional - $19.99/oy</option>
+                        <option value="business" <?php echo $plan == 'business' ? 'selected' : ''; ?>>Biznes - $49.99/oy</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="name">To'liq Ismingiz</label>
+                    <input type="text" id="name" name="name" required placeholder="Ismingizni kiriting">
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email Manzil</label>
+                    <input type="email" id="email" name="email" required placeholder="email@example.com">
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">Telefon Raqam</label>
+                    <input type="tel" id="phone" name="phone" required placeholder="+998 XX XXX-XX-XX">
+                </div>
+                
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Buyurtma Berish</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Bizning Sayt. Barcha huquqlar himoyalangan.</p>
+    </footer>
+</body>
+</html>
