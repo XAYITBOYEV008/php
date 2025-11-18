@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?php
 $a = 1;
 switch ($a) {
@@ -25,3 +26,6 @@ switch ($a) {
   default:
     echo "bunday hafta kuni yoq";
 }
+=======
+<html><body><h1>PHP-1 Project</h1><a href="calculator.php">Calculator</a></body></html>
+>>>>>>> cb5e73504ebb1583fedcfc510e808fb887f78158
