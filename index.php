@@ -20,7 +20,7 @@ switch ($a) {
     echo "bugun shanba";
     break;
      case "7":
-    echo "bugun yakshanba";
+    echo "bugun yakshan;
     break;
   default:
     echo "bunday hafta kuni yoq";
