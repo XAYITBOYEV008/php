@@ -1,27 +1,45 @@
 <?php
-$a = 1;
-switch ($a) {
-  case 1:
-    echo " bugun dushanba ";
+$oy = date('m'); 
+
+switch ($oy) {
+    case 1:
+        echo "Yanvar";
+        break;
+    case 2:
+        echo "Fevral";
+        break;
+    case 3:
+        echo "Mart";
+        break;
+    case 4:
+        echo "Aprel";
+        break;
+    case 5:
+        echo "May";
     break;
-  case "2":
-    echo "bugun seshanba";
+    case 6:
+      echo "Iyun";
+        break;
+    case 7:
+        echo "Iyul";
     break;
-   case "3":
-    echo "bugun chorshanba";
-    break;
-     case "4":
-    echo "bugun payshanba";
-    break;
-     case "5":
-    echo "bugun juma";
-    break;
-     case "6":
-    echo "bugun shanba";
-    break;
-     case "7":
-    echo "bugun yakshanba";
-    break;
-  default:
-    echo "bunday hafta kuni yoq";
+    case 8:
+       echo "Avgust";
+        break;
+    case 9:
+       echo "Sentabr";
+        break;
+    case 10:
+    echo "Oktyabr";
+        break;
+    case 11:
+        echo "Noyabr";
+      break;
+    case 12:
+       echo "Dekabr";
+        break;
+    default:
+        echo "bunday oy yoq";
+        break;
 }
+?>
