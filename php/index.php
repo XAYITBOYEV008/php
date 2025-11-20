@@ -1,3 +1,0 @@
-<?php
-echo "are you gey?"
-?>

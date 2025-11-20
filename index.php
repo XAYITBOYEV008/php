@@ -1,15 +1,14 @@
-<?php
-$a = 12;
-$b = 25;
-$c = 7;
+<?php 
+$a = 67;
+$e = $a ** 3;
 
-$katta = $a;
-
-if ($b > $katta && $b > $c) {
-    $katta = $b;
-} else if ($c > $katta) {
-    $katta = $c;
+if ($a > 0 && $a < 10) {
+echo $e;
 }
-
-echo "Eng katta son: " . $katta;
+elseif ($a >= 10 && $a < 50) {
+    echo sqrt($a);
+}
+else {
+    echo "bunday son mavjud emas";
+}
 ?>
