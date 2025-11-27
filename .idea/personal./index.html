@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sevinch Market Premium</title>
+
+<style>
+/* -------------------------
+     GLOBAL STYLE
+-------------------------- */
+:root{
+    --bg:#f4f4f4;
+    --text:#111;
+    --card:rgba(255,255,255,.35);
+    --glass-border:rgba(255,255,255,.3);
+    --accent:#ff3f7a;
+    --shadow:0 10px 40px rgba(0,0,0,.15);
+}
+body.dark{
+    --bg:#0d0d0d;
+    --text:#fff;
+    --card:rgba(20,20,20,.45);
+    --glass-border:rgba(255,255,255,.1);
+    --accent:#ff2f7a;
+    --shadow:0 10px 40px rgba(255,255,255,.08);
+}
+
+body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Poppins',sans-serif;
+    transition:.4s ease;
+}
+
+/* -------------------------
+       HEADER
+-------------------------- */
+header{
+    text-align:center;
+    padding:25px;
+    font-size:28px;
+    font-weight:700;
+    color:#fff;
+    background:linear-gradient(135deg,#ff3f7a,#ff8f4f);
+    box-shadow:var(--shadow);
+}
+
+/* -------------------------
+      TOP CONTROL PANEL
+-------------------------- */
+.controls{
+    display:flex;
+    justify-content:center;
+    gap:12px;
+    margin:20px;
+}
+select,button{
+    padding:12px 16px;
+    font-size:15px;
+    background:var(--card);
+    backdrop-filter:blur(12px);
+    border:1px solid var(--glass-border);
+    border-radius:14px;
+    color:var(--text);
+    cursor:pointer;
+    transition:.3s;
+    box-shadow:var(--shadow);
+}
+button:hover,select:hover{
+    transform:translateY(-3px);
+}
+
+/* -------------------------
+        SEARCH BAR
+-------------------------- */
+.search-box{
+    max-width:450px;
+    margin:0 auto;
+    display:flex;
+    gap:10px;
+}
+.search-box input{
+    flex:1;
+    padding:14px;
+    font-size:16px;
+    border:none;
+    border-radius:14px;
+    background:var(--card);
+    backdrop-filter:blur(12px);
+    border:1px solid var(--glass-border);
+    color:var(--text);
+}
+
+/* -------------------------
+        CATEGORY TABS
+-------------------------- */
+.tabs{
+    text-align:center;
+    margin:25px 0;
+}
+.tab{
+    padding:10px 18px;
+    margin:4px;
+    border-radius:20px;
+    display:inline-block;
+    background:var(--card);
+    border:1px solid var(--glass-border);
+    cursor:pointer;
+    transition:.3s;
+}
+.tab:hover{
+    background:var(--accent);
+    color:#fff;
+}
+
+/* -------------------------
+        PRODUCT GRID
+-------------------------- */
+.products{
+    padding:20px;
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
+    gap:25px;
+}
+.card{
+    background:var(--card);
+    backdrop-filter:blur(25px);
+    border:1px solid var(--glass-border);
+    border-radius:20px;
+    padding:25px;
+    text-align:center;
+    box-shadow:var(--shadow);
+    transition:.4s;
+    position:relative;
+}
+.card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 20px 60px rgba(255,50,120,.4);
+}
+.fake-img{
+    height:150px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:34px;
+}
+.btn{
+    margin-top:12px;
+    padding:12px 20px;
+    border:none;
+    color:#fff;
+    background:var(--accent);
+    border-radius:14px;
+    cursor:pointer;
+    transition:.3s;
+}
+.btn:hover{
+    opacity:.85;
+}
+
+/* FOOTER */
+footer{
+    margin-top:40px;
+    padding:20px;
+    text-align:center;
+    background:var(--card);
+    border-top:1px solid var(--glass-border);
+}
+</style>
+
+</head>
+<body>
+
+<header id="title">💄 SEVINCH MARKET — PREMIUM COSMETICS</header>
+
+<!-- CONTROL PANEL -->
+<div class="controls">
+    <select id="lang" onchange="changeLang()">
+        <option value="uz">🇺🇿 Uzbek</option>
+        <option value="en">🇬🇧 English</option>
+        <option value="ru">🇷🇺 Русский</option>
+        <option value="kr">🇰🇷 한국어</option>
+        <option value="ar">🇸🇦 العربية</option>
+    </select>
+
+    <button onclick="toggleTheme()" id="themeBtn">🌙 Dark</button>
+</div>
+
+<!-- SEARCH -->
+<div class="search-box">
+    <input id="search" placeholder="Search...">
+    <button onclick="searchProduct()" id="searchBtn">🔍</button>
+</div>
+
+<!-- CATEGORY TABS -->
+<div class="tabs">
+    <span class="tab" onclick="filterCat('all')">All</span>
+    <span class="tab" onclick="filterCat('face')">Face</span>
+    <span class="tab" onclick="filterCat('hair')">Hair</span>
+    <span class="tab" onclick="filterCat('makeup')">Makeup</span>
+    <span class="tab" onclick="filterCat('perfume')">Perfume</span>
+</div>
+
+<!-- PRODUCTS -->
+<div class="products" id="product-list"></div>
+
+<footer id="footer">© 2025 Sevinch Market — Premium</footer>
+
+<script>
+/* -------------------------
+        MULTILANG DATA
+-------------------------- */
+const langData = {
+    uz:{title:"💄 SEVINCH MARKET — PREMIUM KOSMETIKA", search:"Qidirish...", footer:"© 2025 Sevinch Market — Barcha huquqlar himoyalangan"},
+    en:{title:"💄 SEVINCH MARKET — PREMIUM COSMETICS", search:"Search...", footer:"© 2025 Sevinch Market — All rights reserved"},
+    ru:{title:"💄 SEVINCH MARKET — ПРЕМИУМ КОСМЕТИКА", search:"Поиск...", footer:"© 2025 Sevinch Market — Все права защищены"},
+    kr:{title:"💄 세빈치 마켓 — 프리미엄 화장품", search:"검색...", footer:"© 2025 세빈치 — 모든 권리 보유"},
+    ar:{title:"💄 سيفينتش ماركت — مستحضرات تجميل فاخرة", search:"بحث...", footer:"© 2025 سيفينتش — جميع الحقوق محفوظة"},
+};
+
+/* -------------------------
+        PRODUCT DATA
+-------------------------- */
+const products = [
+    {cat:"face", icon:"🧴", name:{uz:"Yuz Kremi",en:"Face Cream",ru:"Крем",kr:"페이스 크림",ar:"كريم"}, price:"29 000"},
+    {cat:"hair", icon:"💇", name:{uz:"Taroq",en:"Comb",ru:"Расческа",kr:"빗",ar:"مشط"}, price:"15 000"},
+    {cat:"perfume", icon:"🌸", name:{uz:"Atir",en:"Perfume",ru:"Парфюм",kr:"향수",ar:"عطر"}, price:"79 000"},
+    {cat:"makeup", icon:"💋", name:{uz:"Pomada",en:"Lipstick",ru:"Помада",kr:"립스틱",ar:"روج"}, price:"24 000"},
+    {cat:"makeup", icon:"👁️", name:{uz:"Maskara",en:"Mascara",ru:"Туш",kr:"마스카라",ar:"ماسكارا"}, price:"33 000"},
+    {cat:"hair", icon:"✨", name:{uz:"Soch Spreyi",en:"Hair Spray",ru:"Спрей",kr:"헤어 스프레이",ar:"بخاخ شعر"}, price:"26 000"},
+];
+
+/* -------------------------
+       RENDER PRODUCTS
+-------------------------- */
+function render(lg="uz"){
+    const box=document.getElementById("product-list");
+    box.innerHTML="";
+    products.forEach(p=>{
+        box.innerHTML+=`
+        <div class="card" data-cat="${p.cat}">
+            <div class="fake-img">${p.icon}</div>
+            <h3>${p.name[lg]}</h3>
+            <p><b>${p.price}</b> so'm</p>
+            <button class="btn">🛒 Add</button>
+        </div>`;
+    });
+}
+render();
+
+/* -------------------------
+       SEARCH FUNCTION
+-------------------------- */
+function searchProduct(){
+    let txt=document.getElementById("search").value.toLowerCase();
+    let lg=document.getElementById("lang").value;
+
+    document.querySelectorAll(".card").forEach(c=>{
+        let name=c.querySelector("h3").innerText.toLowerCase();
+        c.style.display=name.includes(txt)?"block":"none";
+    });
+}
+
+/* -------------------------
+       CATEGORY FILTER
+-------------------------- */
+function filterCat(cat){
+    document.querySelectorAll(".card").forEach(c=>{
+        c.style.display=(cat==="all" || c.dataset.cat===cat)?"block":"none";
+    });
+}
+
+/* -------------------------
+       LANGUAGE SWITCH
+-------------------------- */
+function changeLang(){
+    let lg=document.getElementById("lang").value;
+    document.getElementById("title").innerText=langData[lg].title;
+    document.getElementById("search").placeholder=langData[lg].search;
+    document.getElementById("footer").innerText=langData[lg].footer;
+    render(lg);
+}
+
+/* -------------------------
+        THEME SWITCH
+-------------------------- */
+function toggleTheme(){
+    document.body.classList.toggle("dark");
+    let btn=document.getElementById("themeBtn");
+    btn.textContent=document.body.classList.contains("dark")?"☀️ Light":"🌙 Dark";
+}
+</script>
+
+</body>
+</html>

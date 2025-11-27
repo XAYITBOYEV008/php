@@ -1,3 +1,3 @@
 <?php
-echo "<del>salom sunyo</del>"
-?>
+$a = "//////";
+echo "jilli"." ".$a;
