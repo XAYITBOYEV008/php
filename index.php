@@ -1,3 +1,3 @@
 <?php
-$a = "//////";
-echo "jilli"." ".$a;
+$a = "switch";
+echo  strtoupper($a);
