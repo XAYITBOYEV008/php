@@ -1,9 +1,4 @@
 <?php  
-$i = 0;
-if($i == 0){
-while ($i <= 40) {
-  echo $i;
-  $i+=4;
-} }
-?>  
-
+for ($x = 0; $x <= 100; $x+=10) {
+  echo "bu raqam: $x ";
+}
