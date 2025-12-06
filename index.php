@@ -1,7 +1,5 @@
-<?php
-$i = 0;
-while ($i <= 20){
-  $i += 2; 
-  echo $i ;
+<?php 
+for ($i=1; $i < 10; $i++) { 
+  echo $i;
+  echo $i**2;
 }
-?>
