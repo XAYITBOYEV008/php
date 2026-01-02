@@ -1,10 +1,8 @@
-<?php
-function isPrimeFast($n){
-    if ($n < 2 ) return false;
-     if ($n == 2 ) return true;
-      if ($n % 2 == 0 ) return false;
-
-      for ($i= 3 ;  $i <= sqrt($n); $i +=2) { 
-        if($n % $i == 0)return false;
-      }return true;
-}
+ <?php
+$a = 10;
+$b = 23;
+echo "yigindi:".$a+$b."<br>" ;
+echo "ayrma:".$a-$b ."<br>";
+echo "bolnma:".$a/$b ."<br>";
+echo "kopaytma:".$a*$b."<br>" ;
+?>
